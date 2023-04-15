@@ -1,0 +1,51 @@
+# Crear docker-compose de redis
+version: '3.9'
+
+services:
+  redis1:
+    image: redis:7.2-rc1
+    container_name: cont_redis1
+    ports:
+      - 6380:6379
+    volumes:
+      - ./redis1:/data
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+
+  redis2:
+    image: redis:7.2-rc1
+    container_name: cont_redis2
+    ports:
+      - 6381:6379
+    volumes:
+      - ./redis2:/data
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+  
+  redis3:
+    image: redis:7.2-rc1
+    container_name: cont_redis3
+    ports:
+      - 6382:6379
+    volumes:
+      - ./redis3:/data
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+
+
+# --------------------------------------------------------------------------------------------- #
+#               Comandos Basicos de Docker                                                      #
+# Ejecutar: sudo docker compose up -d --build (Este recomiendo primero)
+#           sudo docker compose up -d
+#           sudo docker compose up
+#
+# Detener: sudo docker compose stop
+# Ver contenedores: sudo docker ps -a
+# Ver imagenes: sudo docker images
+# Eliminar contenedores: sudo docker rm <nameorid> (Debe estar en down para eliminarlo)
+# Eliminar imagenes: sudo docker rmi <nameorid>
+# Conocer la IP: sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' <nameorid>
+# Conocer los puertos: sudo docker container port <name>
+# Ver redes: sudo docker network ls
+# Inspeccionar red: sudo docker network inspect <name>
+# --------------------------------------------------------------------------------------------- #
