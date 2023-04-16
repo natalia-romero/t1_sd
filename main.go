@@ -83,12 +83,12 @@ func readInput() string {
 func main() {
 	// Client connections
 	client1 := redis.NewClient(&redis.Options{
-		Addr:     "172.19.0.4:6379",
+		Addr:     "172.19.0.3:6379",
 		Password: "",
 		DB:       0,
 	})
 	client2 := redis.NewClient(&redis.Options{
-		Addr:     "172.19.0.3:6379",
+		Addr:     "172.19.0.4:6379",
 		Password: "",
 		DB:       0,
 	})
@@ -126,10 +126,8 @@ func main() {
 		} else {
 			book = readInput()
 			book = formatBook(book)
-			println("..........................................................")
 			if !findInCache(book, client1, client2, client3) { // create query and save in redis cache (if it doesn't exist)
 				range_ = id / capacity
-				println(range_)
 				if range_ == 0 { //redis 1
 					client1.Set(book, query(book), time.Duration(60)*time.Second)
 				} else if range_ == 1 { //redis 2
@@ -137,15 +135,18 @@ func main() {
 				} else { //redis 3
 					client3.Set(book, query(book), time.Duration(60)*time.Second)
 				}
+				timeRedis = append(timeRedis, 0) // Data not searched in Redis cache
 				getBook(book, client1, client2, client3)
 			} else {
 				// get query from redis cache
+				
 				start := time.Now()
 				getBook(book, client1, client2, client3)
 				end := time.Now()
 				delta := end.Sub(start)
 				println("Tiempo de consulta REDIS en ms: ", delta.Milliseconds())
 				timeRedis = append(timeRedis, delta.Milliseconds()) // save the time of the query
+				timeAPI = append(timeAPI, 0)                        // Data is not search in API.
 			}
 
 			println("..........................................................")
