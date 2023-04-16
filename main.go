@@ -14,8 +14,8 @@ import (
 
 var n = 6 // number of searchs
 var api_url = "https://www.googleapis.com/books/v1/volumes?q="
-var timeAPI = make([]int64, n)
-var timeRedis = make([]int64, n)
+var timeAPI = make([]int64, 0)
+var timeRedis = make([]int64, 0)
 
 func formatBook(book string) string {
 	return strings.ReplaceAll(book, " ", "")
@@ -83,7 +83,7 @@ func readInput() string {
 func main() {
 	// Client connections
 	client1 := redis.NewClient(&redis.Options{
-		Addr:     "172.19.0.3:6379",
+		Addr:     "172.19.0.2:6379",
 		Password: "",
 		DB:       0,
 	})
@@ -93,7 +93,7 @@ func main() {
 		DB:       0,
 	})
 	client3 := redis.NewClient(&redis.Options{
-		Addr:     "172.19.0.2:6379",
+		Addr:     "172.19.0.3:6379",
 		Password: "",
 		DB:       0,
 	})
