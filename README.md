@@ -26,6 +26,10 @@ Ejecutar el siguiente comando para crear los contenedores de redis:
 ```
 sudo docker compose up -d --build
 ```
+Luego, ejecutar el siguiente comando para correr contenedores de redis:
+```
+sudo docker compose up
+```
 Buscar ID de cada contenedor redis:
 ```
 sudo docker ps -a
